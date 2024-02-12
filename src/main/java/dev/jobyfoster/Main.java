@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
 
         Notemaker notes = new Notemaker();
-        notes.establishDBConnection();
+        notes.db.establishDBConnection();
+        notes.db.executeUpdate();
 //        notes.createUser("joby", "password");
     }
 }

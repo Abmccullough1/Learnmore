@@ -4,7 +4,15 @@ import java.sql.*;
 
 public class DatabaseManager {
     private final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
-    public Connection db = DriverManager.getConnection(DB_URL, "postgres", "password");
+    public Connection db;
+
+    {
+        try {
+            db = DriverManager.getConnection(DB_URL, "postgres", "password");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void establishDBConnection() {
         try {
@@ -41,5 +49,19 @@ public class DatabaseManager {
         }
 
         System.out.printf("You have successfully created user %s!", username);
+    }
+
+    public void executeUpdate() {
+        Statement st = null;
+        try {
+            st = db.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            st.executeUpdate("CREATE TABLE users (user_id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL)");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
