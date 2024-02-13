@@ -14,7 +14,7 @@ public class DatabaseManager {
         }
     }
 
-    public void establishDBConnection() {
+    public void viewAllUsers() {
         try {
             Statement st = db.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Users");
@@ -24,15 +24,18 @@ public class DatabaseManager {
                 String username = rs.getString(2);
                 String password = rs.getString(3);
 
-                System.out.printf("ID: %s: User: %s Pass: %s", id, username, password);
+                System.out.printf("ID: %s: User: %s Pass: %s%n", id, username, password);
             }
+            rs.close();
+            st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(1);
         }
     }
 
-    public void createUser(String username, String password) {
+    public void createUser(String newUsername, String newPassword) throws SQLException {
         Statement st = null;
         try {
             st = this.db.createStatement();
@@ -40,18 +43,19 @@ public class DatabaseManager {
             e.printStackTrace();
             System.exit(1);
         }
-
+        String query = String.format("INSERT INTO Users (username, password) VALUES ('%s', '%s')", newUsername, newPassword);
         try {
-            st.executeUpdate("insert into Users (username, password) values ('joby', 'password')");
+            st.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(1);
         }
 
-        System.out.printf("You have successfully created user %s!", username);
+        System.out.printf("You have successfully created user %s!", newUsername);
+        st.close();
     }
 
-    public void executeUpdate() {
+    public void createUsersTable() throws SQLException {
         Statement st = null;
         try {
             st = db.createStatement();
@@ -63,5 +67,6 @@ public class DatabaseManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        st.close();
     }
 }

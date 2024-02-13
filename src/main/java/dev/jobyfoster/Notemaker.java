@@ -25,7 +25,6 @@ public class Notemaker {
     public DatabaseManager db = new DatabaseManager();
 
 
-
     public String getLearningSheet(String topic) {
         String prompt = String.format("Generate a comprehensive markdown-styled studying sheet on %s. Structure the content to facilitate spaced repetition and active recall. Begin with an overview section that succinctly summarizes the key concepts and definitions. Follow this with a detailed breakdown of each main idea, incorporating bullet points, diagrams, and code snippets (where applicable) for clarity. " +
                 "Next, include a section with potential questions and quizzes designed for self-assessment, emphasizing the application of concepts in various contexts. Ensure these questions are tiered from basic to advanced to cater to progressive learning difficulty. " +
