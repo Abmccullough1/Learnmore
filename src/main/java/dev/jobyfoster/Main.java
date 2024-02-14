@@ -80,10 +80,22 @@ public class Main {
             Directive = input().toLowerCase();
             switch (Directive.toLowerCase()) {
                 case "generate":
-                    print("test study");
+                    print("We will now take you through prompting to create your learning sheet!");
+                    print("The learning sheet includes an overview, detailed explanations, interactive elements, self-assessment questions, and additional resources, all formatted in markdown for clarity and ease of use.");
+                    print("What do you want to learn?");
+                    String sheetTopic = prompt("> I want to learn ");
 
-                    // Actual code goes here
+                    print("What is your current understanding of this topic? (Beginner, Intermediate, Advanced)");
+                    String learningLevel = prompt("> My current understanding is ");
 
+                    print("What is your preferred learning style? (Visual, Auditory, Reading/Writing, Kinesthetic)");
+                    String learningStyle = prompt("> My preferred learning style is ");
+
+                    print("What is your goal in learning this topic? (e.g., to apply it in a project, to gain a comprehensive understanding, to pass an exam)");
+                    String interestGoal = prompt("> My goal is ");
+
+                    String sheet = notes.getLearningSheet(sheetTopic, learningLevel, learningStyle, interestGoal);
+                    print(sheet);
                     break;
 
 
@@ -114,7 +126,7 @@ public class Main {
         }
     }
     public static void main(String[] args) throws SQLException {
-        welcome();
+        LearnMore();
 //        System.out.println(notes.db.getUserID("ggg"));
 //        if(notes.db.checkSignIn("joby", "password")) {
 //            System.out.println("valid login");
