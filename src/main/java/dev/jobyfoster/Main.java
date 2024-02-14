@@ -4,16 +4,20 @@ import static dev.jobyfoster.BasicFunctions.*;
 import java.sql.SQLException;
 
 public class Main {
+
     static Notemaker notes = new Notemaker();
     static void login(){
         print("Please Sign In");
         int loginAttempts = 0;
+        boolean withold = false;
+        String LastAttemptName = "";
         while (true) {
             if (loginAttempts > 3) {
                 print("You have failed logging in too many times!");
                 System.exit(1);
             }
             System.out.printf("Attempts: %s%n", loginAttempts);
+
             String InputUserName = prompt("Username: ");
             String InputPassword = prompt("Password: ");
             if(notes.db.checkSignIn(InputUserName, InputPassword)) {
@@ -27,6 +31,15 @@ public class Main {
                 }
             } else {
                 loginAttempts++;
+                if (!withold) {
+                    LastAttemptName = InputUserName;
+                    withold = true;
+                }
+                if (!LastAttemptName.equals(InputUserName)) {
+                    loginAttempts = 0;
+                    withold = false;
+                }
+
             }
         }
 
@@ -76,7 +89,7 @@ public class Main {
         welcome();
         while (!Directive.equalsIgnoreCase("log out")) {
             print("What would you like to do?");
-            print("Generate, Share, browse, Log Out");
+            print("Generate, Share, Browse, Log Out");
             Directive = input().toLowerCase();
             switch (Directive.toLowerCase()) {
                 case "generate":
