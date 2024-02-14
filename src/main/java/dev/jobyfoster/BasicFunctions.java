@@ -1,9 +1,8 @@
 package dev.jobyfoster;
 
 import java.util.Scanner;
-
 public class BasicFunctions {
-
+static Notemaker n = new Notemaker();
 
     static void print(String text) {
         System.out.println(text);
@@ -40,10 +39,9 @@ public class BasicFunctions {
             Directive = input().toLowerCase();
             switch (Directive) {
                 case "study":
-                    print("test study");
-
-                    // Actual code goes here
-
+                    print("What are you studying? ");
+                    String Study = input();
+                    n.getLearningSheet(Study);
                     break;
 
 
