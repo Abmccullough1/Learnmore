@@ -1,4 +1,6 @@
 package dev.jobyfoster;
+import java.util.Scanner;
+import static dev.jobyfoster.BasicFunctions.*;
 
 import java.sql.SQLException;
 
@@ -7,7 +9,5 @@ public class Main {
 
         Notemaker notes = new Notemaker();
         notes.db.viewAllUsers();
-
-//        notes.db.executeUpdate();
     }
 }
