@@ -1,5 +1,6 @@
 package dev.jobyfoster;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 
 public class DatabaseManager {
@@ -55,13 +56,56 @@ public class DatabaseManager {
         st.close();
     }
 
+    public boolean checkSignIn(String username, String password) {
+        boolean validLogin = false;
+        String query = String.format("SELECT username, password FROM users WHERE username='%s'", username);
+        try {
+            Statement st = db.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+//                System.out.printf("%s %s", rs.getString(1), rs.getString(2));
+                String storedPassword = rs.getString(2);
+                if (storedPassword.equals(password)){
+                    validLogin = true;
+                }
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return validLogin;
+    }
+
+    public int getUserID(String username) {
+        int userID = 0;
+        String query = String.format("SELECT user_id FROM users WHERE username='%s'", username);
+        try {
+            Statement st = db.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                userID = rs.getInt(1);
+
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        return userID;
+    }
+
     public void createUsersTable() throws SQLException {
-        Statement st = null;
+        Statement st;
         try {
             st = db.createStatement();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         try {
             st.executeUpdate("CREATE TABLE users (user_id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL)");
         } catch (SQLException e) {

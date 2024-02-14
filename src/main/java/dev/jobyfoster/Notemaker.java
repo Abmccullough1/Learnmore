@@ -23,7 +23,7 @@ public class Notemaker {
                         
             Both sheets should be formatted in markdown to support easy navigation and reference. Adjust the complexity and depth of the content based on the topic's nature, ensuring it's accessible yet challenging enough to promote active engagement. The final output should serve as a versatile educational tool, adaptable to various learning styles and objectives.""";
     public DatabaseManager db = new DatabaseManager();
-
+    public int currentUser = 0;
 
     public String getLearningSheet(String topic) {
         String prompt = String.format("Generate a comprehensive markdown-styled studying sheet on %s. Structure the content to facilitate spaced repetition and active recall. Begin with an overview section that succinctly summarizes the key concepts and definitions. Follow this with a detailed breakdown of each main idea, incorporating bullet points, diagrams, and code snippets (where applicable) for clarity. " +
