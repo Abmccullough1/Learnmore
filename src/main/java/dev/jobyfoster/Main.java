@@ -76,7 +76,7 @@ public class Main {
         welcome();
         while (!Directive.equalsIgnoreCase("log out")) {
             print("What would you like to do?");
-            print("< Generate >, < Share >, < browse >, < Log Out >");
+            print("Generate, Share, browse, Log Out");
             Directive = input().toLowerCase();
             switch (Directive.toLowerCase()) {
                 case "generate":
