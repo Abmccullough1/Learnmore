@@ -125,6 +125,14 @@ public class Main {
                             }
                             Files.writeString(Path.of(path), sheet);
 
+                        } else if (System.getProperty("os.name").equals("Windows 11")) {
+                            String FileName = prompt("What do you want to name the file? ");
+                            String path = "C:\\Users\\"+username+"\\Documents\\"+FileName+".MD";
+                            File MD = new File(path);
+                            if (MD.createNewFile()) {
+                                print("File created in documents.");
+                            }
+                            Files.writeString(Path.of(path), sheet);
                         }
 
                     } else if (save.equals("no")) {
