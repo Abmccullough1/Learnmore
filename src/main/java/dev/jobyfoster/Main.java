@@ -1,7 +1,10 @@
 package dev.jobyfoster;
+import javax.swing.filechooser.FileSystemView;
 import java.util.Scanner;
 import static dev.jobyfoster.BasicFunctions.*;
 import java.sql.SQLException;
+import java.io.*;
+import java.nio.file.*;
 
 public class Main {
 
@@ -84,11 +87,11 @@ public class Main {
             }
         }
     }
-    static void LearnMore() throws SQLException {
+    static void LearnMore() throws SQLException, IOException {
         String Directive = "";
         welcome();
         while (!Directive.equalsIgnoreCase("log out")) {
-            print("What would you like to do?");
+            print(" What would you like to do?");
             print("Generate, Share, Browse, Log Out");
             Directive = input().toLowerCase();
             switch (Directive.toLowerCase()) {
@@ -109,6 +112,26 @@ public class Main {
 
                     String sheet = notes.getLearningSheet(sheetTopic, learningLevel, learningStyle, interestGoal);
                     print(sheet);
+                    String save = prompt("Would you like to save this to your computer? Yes or No. ").toLowerCase();
+                    if (save.equals("yes")) {
+                        String username = System.getProperty("user.name");
+                        print(System.getProperty("os.name"));
+                        if (System.getProperty("os.name").equals("Mac OS X")) {
+                            String FileName = prompt("What do you want to name the file? ");
+                            String path = "/Users/"+username+"/Documents/"+FileName+".MD";
+                            File MD = new File(path);
+                            if (MD.createNewFile()) {
+                                print("File created in documents.");
+                            }
+                            Files.writeString(Path.of(path), sheet);
+
+                        }
+
+                    } else if (save.equals("no")) {
+                        print("File was not saved.");
+                    } else {
+                        print("Invalid Action");
+                    }
                     break;
 
 
@@ -138,7 +161,7 @@ public class Main {
             }
         }
     }
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException {
         LearnMore();
 //        System.out.println(notes.db.getUserID("ggg"));
 //        if(notes.db.checkSignIn("joby", "password")) {

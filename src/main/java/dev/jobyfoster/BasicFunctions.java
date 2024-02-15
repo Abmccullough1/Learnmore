@@ -11,7 +11,7 @@ public class BasicFunctions {
 
     static String input() {
         Scanner i = new Scanner(System.in);
-        return i.next();
+        return i.nextLine();
     }
 
     public static String prompt(String question){
