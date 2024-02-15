@@ -113,4 +113,20 @@ public class DatabaseManager {
         }
         st.close();
     }
+    public void createlearningsheetstable() throws sqlExeption, SQLException {
+        Statement st;
+        try {
+            st = db.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            st.executeUpdate("CREATE TABLE learningsheets (topic VARCHAR(300) NOT NULL, content VARCHAR(1000000000000000000) NOT NULL, user_id BIGINT REFERENCES(user) NOT NULL)");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        st.close();
+    }
+}
 }
