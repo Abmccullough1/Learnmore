@@ -1,6 +1,4 @@
 package dev.jobyfoster;
-import javax.swing.filechooser.FileSystemView;
-import java.util.Scanner;
 import static dev.jobyfoster.BasicFunctions.*;
 import java.sql.SQLException;
 import java.io.*;
@@ -112,10 +110,18 @@ public class Main {
 
                     String sheet = notes.getLearningSheet(sheetTopic, learningLevel, learningStyle, interestGoal);
                     print(sheet);
-                    String save = prompt("Would you like to save this to your computer? Yes or No. ").toLowerCase();
-                    if (save.equals("yes")) {
+                    String save_to_database = prompt("Would you like to save this sheet? Yes or No. ").toLowerCase();
+                    if (save_to_database.equals("yes")){
+                        print("Saved to profile, check 'sheets' to find.");
+                    } else if (save_to_database.equals("no")) {
+                        print("File was not saved to computer.");
+                    }
+                    else {
+                        print("Invalid Action");
+                    }
+                    String save_to_computer = prompt("Would you like to save this sheet to your computer? Yes or No. ").toLowerCase();
+                    if (save_to_computer.equals("yes")) {
                         String username = System.getProperty("user.name");
-                        print(System.getProperty("os.name"));
                         if (System.getProperty("os.name").equals("Mac OS X")) {
                             String FileName = prompt("What do you want to name the file? ");
                             String path = "/Users/"+username+"/Documents/"+FileName+".MD";
@@ -135,15 +141,17 @@ public class Main {
                             Files.writeString(Path.of(path), sheet);
                         }
 
-                    } else if (save.equals("no")) {
-                        print("File was not saved.");
-                    } else {
+                    }
+                    else if (save_to_computer.equals("no")) {
+                        print("File was not saved to computer.");
+                    }
+                    else {
                         print("Invalid Action");
                     }
                     break;
 
 
-                case "share":
+                case "sheets":
                     print("test share");
 
                     // Actual code goes here
@@ -171,13 +179,5 @@ public class Main {
     }
     public static void main(String[] args) throws SQLException, IOException {
         LearnMore();
-//        System.out.println(notes.db.getUserID("ggg"));
-//        if(notes.db.checkSignIn("joby", "password")) {
-//            System.out.println("valid login");
-//        } else {
-//            System.out.println("invalid login");
-//        }
-
-
     }
 }
