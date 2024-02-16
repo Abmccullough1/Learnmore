@@ -113,7 +113,7 @@ public class DatabaseManager {
         }
         st.close();
     }
-    public void createlearningsheetstable() throws sqlExeption, SQLException {
+    public void createLearningSheetsTable() throws sqlExeption, SQLException {
         Statement st;
         try {
             st = db.createStatement();
@@ -128,5 +128,4 @@ public class DatabaseManager {
         }
         st.close();
     }
-}
 }
