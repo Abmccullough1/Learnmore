@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class Notemaker {
-    private final String API_KEY = "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";
+    private final String API_KEY = "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";
     private final OpenAiService service = new OpenAiService(API_KEY, Duration.ofSeconds(15));
     private final String SYSTEM_PROMPT = """
             Generate concise, markdown-formatted learning sheets for in-depth study on a given topic. Target advanced educational strategies such as spaced repetition, active recall, the Feynman Technique, inquiry-based learning, and problem-based learning to enhance understanding and retention. Structure the content to engage learners at various levels, incorporating:

@@ -5,17 +5,17 @@ import java.sql.*;
 
 public class DatabaseManager {
     private final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
-    public Connection db;
+    public static Connection db;
 
     {
         try {
-            db = DriverManager.getConnection(DB_URL, "postgres", "password");
+            db = DriverManager.getConnection(DB_URL, "postgres", "Jackisadog1");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void viewAllUsers() {
+    public static void viewAllUsers() {
         try {
             Statement st = db.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Users");
@@ -55,6 +55,7 @@ public class DatabaseManager {
         System.out.printf("You have successfully created user %s!", newUsername);
         st.close();
     }
+
 
     public boolean checkSignIn(String username, String password) {
         boolean validLogin = false;
@@ -113,7 +114,7 @@ public class DatabaseManager {
         }
         st.close();
     }
-    public void createLearningSheetsTable() throws sqlExeption, SQLException {
+    public void createLearningSheetsTable() throws SQLException {
         Statement st;
         try {
             st = db.createStatement();
@@ -122,7 +123,7 @@ public class DatabaseManager {
         }
 
         try {
-            st.executeUpdate("CREATE TABLE learningsheets (topic VARCHAR(300) NOT NULL, content VARCHAR(1000000000000000000) NOT NULL, user_id BIGINT REFERENCES(user) NOT NULL)");
+            st.executeUpdate("CREATE TABLE learningsheets (topic VARCHAR(300) NOT NULL, content VARCHAR(300) NOT NULL, user_id BIGINT REFERENCES(user) NOT NULL)");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

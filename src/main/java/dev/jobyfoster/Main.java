@@ -85,12 +85,12 @@ public class Main {
             }
         }
     }
-    static void LearnMore() throws SQLException, IOException {
+    public static void LearnMore() throws SQLException, IOException {
         String Directive = "";
         welcome();
         while (!Directive.equalsIgnoreCase("log out")) {
             print(" What would you like to do?");
-            print("Generate, Share, Browse, Log Out");
+            print("Generate or Log Out");
             Directive = input().toLowerCase();
             switch (Directive.toLowerCase()) {
                 case "generate":
@@ -110,6 +110,7 @@ public class Main {
 
                     String sheet = notes.getLearningSheet(sheetTopic, learningLevel, learningStyle, interestGoal);
                     print(sheet);
+
                     String save_to_database = prompt("Would you like to save this sheet? Yes or No. ").toLowerCase();
                     if (save_to_database.equals("yes")){
                         print("Saved to profile, check 'sheets' to find.");
@@ -150,21 +151,6 @@ public class Main {
                     }
                     break;
 
-
-                case "sheets":
-                    print("test share");
-
-                    // Actual code goes here
-
-                    break;
-
-
-                case "browse":
-                    print("test browse");
-
-                    // Actual code goes here
-
-                    break;
 
 
                 case "log out":
