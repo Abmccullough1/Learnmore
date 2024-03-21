@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class DatabaseManager {
     private final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
-    public static Connection db;
+    public Connection db;
 
     {
         try {
@@ -15,7 +15,7 @@ public class DatabaseManager {
         }
     }
 
-    public static void viewAllUsers() {
+    public void viewAllUsers() {
         try {
             Statement st = db.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Users");
@@ -55,7 +55,6 @@ public class DatabaseManager {
         System.out.printf("You have successfully created user %s!", newUsername);
         st.close();
     }
-
 
     public boolean checkSignIn(String username, String password) {
         boolean validLogin = false;
@@ -123,10 +122,53 @@ public class DatabaseManager {
         }
 
         try {
-            st.executeUpdate("CREATE TABLE learningsheets (topic VARCHAR(300) NOT NULL, content VARCHAR(300) NOT NULL, user_id BIGINT REFERENCES(user) NOT NULL)");
+            st.executeUpdate("CREATE TABLE learningsheets (id BIGSERIAL PRIMARY KEY,topic TEXT NOT NULL, content TEXT NOT NULL)");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         st.close();
+    }
+    public void createSheet(String newTopic, String newContent) throws SQLException {
+        Statement st = null;
+        try {
+            st = this.db.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        String query = String.format("INSERT INTO learningsheets (topic, content) VALUES ('%s', '%s')", newTopic, newContent);
+        try {
+            st.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        st.close();
+    }
+
+    public void viewAllSheets() {
+        try {
+            Statement st = db.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM learningsheets");
+
+            while (rs.next()) {
+                String id = rs.getString(1);
+                String topic = rs.getString(2);
+                String context = rs.getString(3);
+
+                System.out.println("--------------------");
+                System.out.printf("ID: %s: Topic: %s", id, topic);
+                System.out.println("");
+                System.out.println(context);
+                System.out.println("--------------------");
+            }
+            rs.close();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 }

@@ -1,4 +1,6 @@
 package dev.jobyfoster;
+import javax.print.attribute.standard.SheetCollate;
+
 import static dev.jobyfoster.BasicFunctions.*;
 import java.sql.SQLException;
 import java.io.*;
@@ -85,12 +87,12 @@ public class Main {
             }
         }
     }
-    public static void LearnMore() throws SQLException, IOException {
+    static void LearnMore() throws SQLException, IOException {
         String Directive = "";
         welcome();
         while (!Directive.equalsIgnoreCase("log out")) {
             print(" What would you like to do?");
-            print("Generate or Log Out");
+            print("Generate, Sheets, Log Out");
             Directive = input().toLowerCase();
             switch (Directive.toLowerCase()) {
                 case "generate":
@@ -110,10 +112,13 @@ public class Main {
 
                     String sheet = notes.getLearningSheet(sheetTopic, learningLevel, learningStyle, interestGoal);
                     print(sheet);
+                    String l = sheet.replace("'","`");
 
-                    String save_to_database = prompt("Would you like to save this sheet? Yes or No. ").toLowerCase();
+                    String save_to_database = prompt("Would you like to save this sheet to the database? Yes or No. ").toLowerCase();
                     if (save_to_database.equals("yes")){
-                        print("Saved to profile, check 'sheets' to find.");
+                        notes.db.createSheet(sheetTopic,l);
+                        print("Saved to database, check 'sheets' to find.");
+
                     } else if (save_to_database.equals("no")) {
                         print("File was not saved to computer.");
                     }
@@ -152,6 +157,11 @@ public class Main {
                     break;
 
 
+                case "sheets":
+                    e.viewAllSheets();
+                    break;
+
+
 
                 case "log out":
                     print("Logging Out...");
@@ -163,6 +173,7 @@ public class Main {
             }
         }
     }
+    static DatabaseManager e = new DatabaseManager();
     public static void main(String[] args) throws SQLException, IOException {
         LearnMore();
     }
